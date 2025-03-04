@@ -11,6 +11,7 @@ mysql -u root -p
 <br/>
 
 Logiquement cette commande devrais vous retourner ceci :
+
 <img src="./imgs/mysql_root_output.png" style="border-radius: 10px; ">
 
 <br/>
