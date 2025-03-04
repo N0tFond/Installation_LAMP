@@ -35,6 +35,7 @@ sudo mysql -u root
 <br/>
 
 Cela devrais vous afficher :
+
 <img src="./imgs/mysql_sudo_output.png" style="border-radius: 10px; ">
 
 #### **Création de l'AdminDB**
