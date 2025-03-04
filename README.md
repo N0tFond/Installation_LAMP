@@ -132,6 +132,8 @@ Si vous êtes arrivez ici, c'est que vous avez terminer l'installation de votre 
 
 # Notes :
 
+Ce repos sert d'installation d'un serveur LAMP dans un réseau clos, il n'est en aucun cas là pour l'installation d'un serveur LAMP destiner à la production
+
 > <br/>
 > Ce repos n'est pas parfait, il fait guise de guide pour une installation vraiment minimal d'un serveur LAMP, vous trouverez des configurations plus complète sur github ou même internet ! 
 > <br/>

@@ -126,6 +126,8 @@ If you’ve made it this far, you’ve completed the installation of your LAMP s
 
 # Notes:
 
+This repos is for installing a LAMP server in a closed network, not for installing a production LAMP server.
+
 > <br/>
 > This repository is not perfect; it serves as a guide for a very minimal LAMP server installation. You’ll find more complete configurations on GitHub or elsewhere on the internet! 
 > <br/>
