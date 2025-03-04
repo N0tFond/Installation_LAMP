@@ -33,12 +33,12 @@ sudo systemctl status apache2.service
 <br/>
 
 If Apache has been installed correctly, this should display something like this:
-<img src="./imgs/command_output_apache2.png" style="border-radius: 10px;"/>
+<img src="../imgs/command_output_apache2.png" style="border-radius: 10px;"/>
 
 <br>
 
 If you have access to a graphical interface, you can simply search for _`localhost`_ in your browser’s search bar, and you should see this page:
-<img src="./imgs/localhost_output.png" style="border-radius: 10px;"/>
+<img src="../imgs/localhost_output.png" style="border-radius: 10px;"/>
 
 ## Installing MariaDB / MySQL
 
@@ -53,7 +53,7 @@ sudo apt install -y mariadb-server mariadb-client
 <br/>
 Once the installation is complete, you can configure your database, create users, etc.
 
-> PS: If you haven’t created a user yet, I explain everything in [MariaDB Config]("./Config_MariaDB.md") about how to create an AdminDB. This will work for both MariaDB and MySQL.
+> PS: If you haven’t created a user yet, I explain everything in `./Config_MariaDB.md` about how to create an AdminDB. This will work for both MariaDB and MySQL.
 
 ### Installing MySQL
 
@@ -93,7 +93,7 @@ php -v
 ```
 
 Example:
-<img src="./imgs/php_cmd_output.png" style="border-radius: 10px;"/>
+<img src="../imgs/php_cmd_output.png" style="border-radius: 10px;"/>
 
 <br/>
 
@@ -116,7 +116,7 @@ sudo rm index.html
 Then create a file called `index.php` in which you can add `phpinfo()`. This should display all the information about the PHP installed on your machine.
 
 Example:
-<img src="./imgs/phpinfo_output.png" style="border-radius: 10px;"/>
+<img src="../imgs/phpinfo_output.png" style="border-radius: 10px;"/>
 
 ---
 

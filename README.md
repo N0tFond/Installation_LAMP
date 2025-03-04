@@ -59,7 +59,7 @@ sudo apt install -y mariadb-server mariadb-client
 <br/>
 Une fois l'installation terminer, vous pouvez configurer votre base de donnée, créer des utilisateurs ect.
 
-> PS : Si vous n'avez pas d'utilisateur de créer, j'explique tout dans la [Config MariaDB]("./MariaDB_Config.md") comment créer un AdminDB, cela sera valable pour MariaDB et MySQL
+> PS : Si vous n'avez pas d'utilisateur de créer, j'explique tout dans la `./MariaDB_Config.md` comment créer un AdminDB, cela sera valable pour MariaDB et MySQL
 
 ### Installation de MariaDB
 
