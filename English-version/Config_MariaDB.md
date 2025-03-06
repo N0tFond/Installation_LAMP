@@ -11,7 +11,7 @@ mysql -u root -p
 <br/>
 
 Normally, this command should return something like this:
-<img src="./imgs/mysql_root_output.png" style="border-radius: 10px; ">
+<img src="../imgs/mysql_root_output.png" style="border-radius: 10px; ">
 
 <br/>
 
@@ -35,7 +35,7 @@ sudo mysql -u root
 <br/>
 
 This should display:
-<img src="./imgs/mysql_sudo_output.png" style="border-radius: 10px; ">
+<img src="../imgs/mysql_sudo_output.png" style="border-radius: 10px; ">
 
 #### **Creating the AdminDB**
 
