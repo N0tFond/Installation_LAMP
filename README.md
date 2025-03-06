@@ -1,6 +1,6 @@
 # An English version is available here :
 
-**[English Version](./English-version/English_version.md)**
+**[Other Languages](./English-version/English_version.md)**
 
 ---
 
@@ -9,8 +9,6 @@
 **Tout d'abord assurez vous d'être sur Linux ou une WSL Linux**
 
 Si vous n'êtes pas sur un système Linux, ce repos ne s'adresse pas à vous.
-
----
 
 ## Dans un premier temps mettez à jour votre système
 
