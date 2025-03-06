@@ -1,6 +1,6 @@
-# An English version is available here :
+# Other Languages is available here :
 
-**[Other Languages](./English-version/English_version.md)**
+**[English version](./English-version/English_version.md)**
 
 ---
 
