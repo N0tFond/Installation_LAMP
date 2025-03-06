@@ -59,7 +59,7 @@ Une fois l'installation terminer, vous pouvez configurer votre base de donnée, 
 
 > PS : Si vous n'avez pas d'utilisateur de créer, j'explique tout dans la `./MariaDB_Config.md` comment créer un AdminDB, cela sera valable pour MariaDB et MySQL
 
-### Installation de MariaDB
+### Installation de MySQL
 
 ```bash
 sudo apt install -y mysql-server
