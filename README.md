@@ -1,141 +1,209 @@
-# Other Languages :
+# Installation d'un serveur LAMP 🚀
 
-**[English version](./English-version/English_version.md)**
+[![en](https://img.shields.io/badge/Lang-English-blue.svg)](./English-version/English_version.md)
 
----
+## Prérequis
 
-# Création d'un LAMP
+> ========================================
+>
+> ⚠️ **Important** : Cette documentation est destinée uniquement aux systèmes Linux ou WSL Linux.
+>
+> ========================================
 
-**Tout d'abord assurez vous d'être sur Linux ou une WSL Linux**
+## Table des matières
 
-Si vous n'êtes pas sur un système Linux, ce repos ne s'adresse pas à vous.
+- [Mise à jour du système](#mise-à-jour-du-système)
+- [Installation d'Apache 2](#installation-dapache-2)
+- [Installation de la base de données](#installation-de-la-base-de-données)
+- [Installation de PHP](#installation-de-php)
+- [Notes](#notes)
 
-## Dans un premier temps mettez à jour votre système
+## Mise à jour du système
+
+Avant de commencer, mettez à jour votre système :
 
 ```bash
-sudo apt install && sudo apt upgrade -y
+sudo apt update && sudo apt upgrade -y
 ```
 
-<br/>
-Une fois le système à jour nous pouvons commencer à installer les dépendance nécessaires.
-
 ## Installation d'Apache 2
+
+1. Installation des paquets :
 
 ```bash
 sudo apt install -y apache2 apache2-utils
 ```
 
-<br/>
-
-Par défaut Apache2 se lance directement lors de la connexion sur le système.<br/>
-Pour vérifier cela vous pouvez simplement tapper
+2. Vérification du statut :
 
 ```bash
 sudo systemctl status apache2.service
 ```
 
-<br/>
+Résultat attendu :
+![Status Apache2](./imgs/command_output_apache2.png)
 
-Si apache à bien été installer cela vous devrais vous afficher ceci :
-<img src="./imgs/command_output_apache2.png" style="border-radius: 10px;"/>
+> ---
+>
+> 💡 Si vous avez une interface graphique, ouvrez `localhost` dans votre navigateur :
+>
+> ![Page localhost](./imgs/localhost_output.png)
+>
+> ---
 
-<br>
+## Installation de la base de données
 
-Si vous avez accès à une interface graphique, vous pouvez simplement rechercher _`localhost`_ dans la barre de recherche de votre navigateur et vous devriez tomber sur cette page :
-<img src="./imgs/localhost_output.png" style="border-radius: 10px;"/>
-
-## Installation MariaDB / MySQL
-
-Une fois Apache installer nous pouvons nous orienter sur la partie base de donnée avant d'installer le PHP.
-
-### Installation de MariaDB
+### Option 1 : MariaDB
 
 ```bash
 sudo apt install -y mariadb-server mariadb-client
 ```
 
-<br/>
-Une fois l'installation terminer, vous pouvez configurer votre base de donnée, créer des utilisateurs ect.
+#### Sécurisation de MariaDB
 
-> PS : Si vous n'avez pas d'utilisateur de créer, j'explique tout dans la `./MariaDB_Config.md` comment créer un AdminDB, cela sera valable pour MariaDB et MySQL
+1. Lancez le script de sécurisation :
 
-### Installation de MySQL
+```bash
+sudo mysql_secure_installation
+```
+
+2. Suivez les étapes suivantes :
+   - Appuyez sur Entrée pour le mot de passe root (par défaut vide)
+   - Tapez 'Y' pour définir un mot de passe root
+   - Entrez et confirmez votre nouveau mot de passe
+   - Répondez 'Y' aux questions suivantes :
+     - Supprimer les utilisateurs anonymes ? (Y)
+     - Interdire la connexion root à distance ? (Y)
+     - Supprimer la base de test ? (Y)
+     - Recharger les privilèges ? (Y)
+
+Exemple de sortie attendue :
+
+```bash
+Securing the MySQL server deployment.
+
+Enter password for user root:
+New password:
+Re-enter new password:
+
+Remove anonymous users? [Y/n] Y
+Disallow root login remotely? [Y/n] Y
+Remove test database and access to it? [Y/n] Y
+Reload privilege tables now? [Y/n] Y
+
+All done!
+```
+
+> 📝 Pour la configuration détaillée de MariaDB, consultez [MariaDB_Config.md](./MariaDB_Config.md)
+
+### Option 2 : MySQL
 
 ```bash
 sudo apt install -y mysql-server
 ```
 
----
+#### Sécurisation de MySQL
 
-## Installation PHP
+1. Lancez le script de sécurisation :
+
+```bash
+sudo mysql_secure_installation
+```
+
+2. Suivez les étapes de configuration :
+   - Configurez le plugin de validation du mot de passe
+     - Choisissez le niveau de complexité (0 = LOW, 2 = STRONG)
+   - Définissez un mot de passe root
+   - Répondez 'Y' aux questions suivantes :
+     - Supprimer les utilisateurs anonymes ? (Y)
+     - Interdire la connexion root à distance ? (Y)
+     - Supprimer la base de test ? (Y)
+     - Recharger les privilèges ? (Y)
+
+Exemple de sortie attendue :
+
+```bash
+Securing the MySQL installation.
+
+Validating password strength for root user.
+Press y|Y for Yes, any other key for No: Y
+
+Choose the level of password validation policy:
+0 = LOW    Length >= 8
+1 = MEDIUM Length >= 8, numeric, mixed case, and special characters
+2 = STRONG Length >= 8, numeric, mixed case, special characters and dictionary
+Please enter 0 = LOW, 1 = MEDIUM and 2 = STRONG: 1
+
+Remove anonymous users? [Y/n] Y
+Disallow root login remotely? [Y/n] Y
+Remove test database and access to it? [Y/n] Y
+Reload privilege tables now? [Y/n] Y
+
+All done!
+```
+
+> 📝 Pour la configuration détaillée de MySQL, consultez la [Documentation MySQL](https://dev.mysql.com/doc/)
+
+## Installation de PHP
+
+1. Installation des paquets PHP :
 
 ```bash
 sudo apt install php libapache2-mod-php php-mysql
 ```
 
-<br/>
-
-Cette commande vous permettra d'installer **PHP** dans toute ça globalité, avec les bons drivers, les bon paramètres...
-
-### Vérifier la version de PHP
-
-> Pour éviter tout soucis de permission pour l'édition des fichiers dans la suite des commandes, je vous conseil de taper la commande suivante :
+2. Configuration des permissions :
 
 ```bash
-chown nomutilisateur /var/www/html/*
+sudo chown $USER /var/www/html/*
 ```
 
-Ceci donnera les accès propriétaire pour le dossier /var/www/html ainsi que tout les fichier présent dans ce dernier.
+### Vérification de l'installation
 
-<br/>
-
-**Par le terminal**
+#### Via Terminal
 
 ```bash
-php -v
-# devrais print php 8.2.26
+php -v  # Devrait afficher PHP 8.2.26
 ```
 
-Exemple :
-<img src="./imgs/php_cmd_output.png" style="border-radius: 10px;"/>
+![Version PHP](./imgs/php_cmd_output.png)
 
-<br/>
+#### Via Apache
 
-**En passant pas Apache**
+1. Accédez au répertoire web :
 
 ```bash
 cd /var/www/html
 ```
 
-<br/>
-
-Une fois dans le dossier, éditer le fichier HTML, ou supprimer le avec
+2. Supprimez l'index par défaut :
 
 ```bash
 sudo rm index.html
 ```
 
-<br/>
+3. Créez un fichier `index.php` avec le contenu suivant :
 
-Ensuite créer un fichier `index.php` dans le quel vous pouvez mettre `phpinfo()`, ceci devrais vous afficher l'entiertée des informations de PHP installer sur votre machine.
+```php
+<?php phpinfo(); ?>
+```
 
-Exemple :
-<img src="./imgs/phpinfo_output.png" style="border-radius: 10px;"/>
+Résultat attendu :
+![PHPInfo](./imgs/phpinfo_output.png)
+
+## Notes
+
+> ⚠️ **Avertissement** : Cette configuration est destinée à un environnement de développement local ou un réseau fermé.
+> Ne pas utiliser en production sans configuration de sécurité supplémentaire.
 
 ---
 
-Si vous êtes arrivez ici, c'est que vous avez terminer l'installation de votre LAMP, ainsi que la base de la configuration, pour la configuration plus poussée, je vous redirige vers internet, ou vous trouverez de plus ample explications que ce que vous pouvez trouvez ici.
+💡 **Conseil** : Pour une configuration plus approfondie, consultez la documentation officielle de chaque composant :
+
+- [Apache Documentation](https://httpd.apache.org/docs/)
+- [PHP Documentation](https://www.php.net/docs.php)
+- [MariaDB Documentation](https://mariadb.org/documentation/)
 
 ---
 
-# Notes :
-
-Ce repos sert d'installation d'un serveur LAMP dans un réseau clos, il n'est en aucun cas là pour l'installation d'un serveur LAMP destiner à la production
-
-> <br/>
-> Ce repos n'est pas parfait, il fait guise de guide pour une installation vraiment minimal d'un serveur LAMP, vous trouverez des configurations plus complète sur github ou même internet ! 
-> <br/>
-> <br/>
-> Merci à vous ! 
-> <br/>
-> <br/>
+_Si vous trouvez ce guide utile, n'hésitez pas à le partager !_ ⭐

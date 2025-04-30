@@ -1,137 +1,201 @@
-# Creating a LAMP Stack
+# LAMP Server Installation 🚀
 
-**First, ensure you are on Linux or a WSL Linux environment**
+[![fr](https://img.shields.io/badge/Lang-Français-blue.svg)](../README.md)
 
-If you are not on a Linux system, this repository is not intended for you.
+## Prerequisites
 
----
+> ⚠️ **Important**: This documentation is intended for Linux or WSL Linux systems only.
 
-## First, update your system
+## Table of Contents
+
+- [System Update](#system-update)
+- [Apache 2 Installation](#apache-2-installation)
+- [Database Installation](#database-installation)
+- [PHP Installation](#php-installation)
+- [Notes](#notes)
+
+## System Update
+
+Before starting, update your system:
 
 ```bash
 sudo apt update && sudo apt upgrade -y
 ```
 
-<br/>
-Once the system is updated, we can begin installing the necessary dependencies.
+## Apache 2 Installation
 
-## Installing Apache 2
+1. Install packages:
 
 ```bash
 sudo apt install -y apache2 apache2-utils
 ```
 
-<br/>
-
-By default, Apache2 starts automatically when the system boots.<br/>
-To verify this, you can simply type:
+2. Check status:
 
 ```bash
 sudo systemctl status apache2.service
 ```
 
-<br/>
+Expected result:
+![Apache2 Status](./imgs/command_output_apache2.png)
 
-If Apache has been installed correctly, this should display something like this:
-<img src="../imgs/command_output_apache2.png" style="border-radius: 10px;"/>
+> 💡 If you have a graphical interface, open `localhost` in your browser:
+>
+> ![Localhost page](./imgs/localhost_output.png)
 
-<br>
+## Database Installation
 
-If you have access to a graphical interface, you can simply search for _`localhost`_ in your browser’s search bar, and you should see this page:
-<img src="../imgs/localhost_output.png" style="border-radius: 10px;"/>
-
-## Installing MariaDB / MySQL
-
-Once Apache is installed, we can move on to the database part before installing PHP.
-
-### Installing MariaDB
+### Option 1: MariaDB
 
 ```bash
 sudo apt install -y mariadb-server mariadb-client
 ```
 
-<br/>
-Once the installation is complete, you can configure your database, create users, etc.
+#### Securing MariaDB
 
-> PS: If you haven’t created a user yet, I explain everything in `./Config_MariaDB.md` about how to create an AdminDB. This will work for both MariaDB and MySQL.
+1. Launch the security script:
 
-### Installing MySQL
+```bash
+sudo mysql_secure_installation
+```
+
+2. Follow these steps:
+   - Press Enter for root password (empty by default)
+   - Type 'Y' to set a root password
+   - Enter and confirm your new password
+   - Answer 'Y' to the following questions:
+     - Remove anonymous users? (Y)
+     - Disallow root login remotely? (Y)
+     - Remove test database? (Y)
+     - Reload privilege tables? (Y)
+
+Expected output:
+
+```bash
+Securing the MySQL server deployment.
+
+Enter password for user root:
+New password:
+Re-enter new password:
+
+Remove anonymous users? [Y/n] Y
+Disallow root login remotely? [Y/n] Y
+Remove test database and access to it? [Y/n] Y
+Reload privilege tables now? [Y/n] Y
+
+All done!
+```
+
+> 📝 For detailed MariaDB configuration, see [MariaDB_Config.md](./MariaDB_Config.md)
+
+### Option 2: MySQL
 
 ```bash
 sudo apt install -y mysql-server
 ```
 
----
+#### Securing MySQL
 
-## Installing PHP
+1. Launch the security script:
+
+```bash
+sudo mysql_secure_installation
+```
+
+2. Follow the configuration steps:
+   - Configure the password validation plugin
+     - Choose complexity level (0 = LOW, 2 = STRONG)
+   - Set a root password
+   - Answer 'Y' to the following questions:
+     - Remove anonymous users? (Y)
+     - Disallow root login remotely? (Y)
+     - Remove test database? (Y)
+     - Reload privilege tables? (Y)
+
+Expected output:
+
+```bash
+Securing the MySQL installation.
+
+Validating password strength for root user.
+Press y|Y for Yes, any other key for No: Y
+
+Choose the level of password validation policy:
+0 = LOW    Length >= 8
+1 = MEDIUM Length >= 8, numeric, mixed case, and special characters
+2 = STRONG Length >= 8, numeric, mixed case, special characters and dictionary
+Please enter 0 = LOW, 1 = MEDIUM and 2 = STRONG: 1
+
+Remove anonymous users? [Y/n] Y
+Disallow root login remotely? [Y/n] Y
+Remove test database and access to it? [Y/n] Y
+Reload privilege tables now? [Y/n] Y
+
+All done!
+```
+
+> 📝 For detailed MySQL configuration, check the [MySQL Documentation](https://dev.mysql.com/doc/)
+
+## PHP Installation
+
+1. Install PHP packages:
 
 ```bash
 sudo apt install php libapache2-mod-php php-mysql
 ```
 
-<br/>
-
-This command will install **PHP** in its entirety, with the correct drivers, the right settings, etc.
-
-### Checking the PHP version
-
-> To avoid any permission issues when editing files in the following steps, I recommend running this command:
+2. Configure permissions:
 
 ```bash
-chown username /var/www/html/*
+sudo chown $USER /var/www/html/*
 ```
 
-This will grant ownership permissions to the /var/www/html directory and all the files within it.
+### Installation Verification
 
-<br/>
-
-**Via the terminal**
+#### Via Terminal
 
 ```bash
-php -v
-# should print php 8.2.26
+php -v  # Should display PHP 8.2.26
 ```
 
-Example:
-<img src="../imgs/php_cmd_output.png" style="border-radius: 10px;"/>
+![PHP Version](./imgs/php_cmd_output.png)
 
-<br/>
+#### Via Apache
 
-**Via Apache**
+1. Access the web directory:
 
 ```bash
 cd /var/www/html
 ```
 
-<br/>
-
-Once in the directory, edit the HTML file, or delete it with:
+2. Remove default index:
 
 ```bash
 sudo rm index.html
 ```
 
-<br/>
+3. Create an `index.php` file with the following content:
 
-Then create a file called `index.php` in which you can add `phpinfo()`. This should display all the information about the PHP installed on your machine.
+```php
+<?php phpinfo(); ?>
+```
 
-Example:
-<img src="../imgs/phpinfo_output.png" style="border-radius: 10px;"/>
+Expected result:
+![PHPInfo](./imgs/phpinfo_output.png)
+
+## Notes
+
+> ⚠️ **Warning**: This configuration is intended for local development or closed network environments.
+> Do not use in production without additional security configuration.
 
 ---
 
-If you’ve made it this far, you’ve completed the installation of your LAMP stack, as well as the basic configuration. For more advanced configuration, I redirect you to the internet, where you’ll find more detailed explanations than what’s provided here.
+💡 **Tip**: For more detailed configuration, check the official documentation of each component:
+
+- [Apache Documentation](https://httpd.apache.org/docs/)
+- [PHP Documentation](https://www.php.net/docs.php)
+- [MariaDB Documentation](https://mariadb.org/documentation/)
 
 ---
 
-# Notes:
-
-This repos is for installing a LAMP server in a closed network, not for installing a production LAMP server.
-
-> <br/>
-> This repository is not perfect; it serves as a guide for a very minimal LAMP server installation. You’ll find more complete configurations on GitHub or elsewhere on the internet! 
-> <br/>
-> <br/>
-> Thank you ! 
-> <br/>
-> <br/>
+_If you find this guide useful, feel free to share it!_ ⭐
